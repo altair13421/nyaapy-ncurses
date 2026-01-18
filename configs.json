@@ -1,0 +1,91 @@
+{
+    "ANIME_TO_AUTO_DOWNLOAD": [
+        "One piece"
+    ],
+    "USERS": {
+        "animetime": {
+            "hevc": true,
+            "tags": "[Anime Time]",
+            "uploader": "sff",
+            "prefix": "[Anime Time] ",
+            "suffix": " [1080p][HEVC 10bit x265][AAC][Multi Sub]",
+            "multi-sub": true
+        },
+        "asw": {
+            "hevc": true,
+            "tags": "[ASW]",
+            "uploader": "AkihitoSubsWeeklies",
+            "prefix": "[ASW] ",
+            "suffix": " [1080p HEVC][E1916E23]",
+            "multi-sub": true
+        },
+        "ember": {
+            "hevc": true,
+            "tags": "[EMBER]",
+            "uploader": "Ember_Encodes",
+            "prefix": "[EMBER] ",
+            "suffix": "",
+            "multi-sub": false
+        },
+        "erairaws": {
+            "hevc": false,
+            "tags": "[Erai-raws]",
+            "uploader": "Erai-raws",
+            "prefix": "[Erai-raws] ",
+            "suffix": " [1080p][Multiple Subtitle][D17B33B4]",
+            "multi-sub": true
+        },
+        "judas": {
+            "hevc": true,
+            "tags": "[Judas]",
+            "uploader": "Judas",
+            "prefix": "[Judas] ",
+            "suffix": "",
+            "multi-sub": true
+        },
+        "nandesuka": {
+            "hevc": true,
+            "tags": "NanDesuKa",
+            "uploader": "NanDesuKa",
+            "prefix": "[YuiSubs] ",
+            "suffix": " (x265 H.265 1080p)",
+            "multi-sub": false
+        },
+        "ncraws": {
+            "hevc": true,
+            "tags": "[NC-Raws]",
+            "uploader": "BraveSail",
+            "prefix": "[NC-Raws] ",
+            "suffix": " (B-Global Donghua 1920x1080 HEVC AAC MKV)",
+            "multi-sub": false
+        },
+        "subsplease": {
+            "hevc": false,
+            "tags": "[SubsPlease]",
+            "uploader": "subsplease",
+            "prefix": "[SubsPlease] ",
+            "suffix": " (1080p) [5B722CBD]",
+            "multi-sub": false
+        },
+        "yakubo": {
+            "hevc": true,
+            "tags": "[YakuboEncodes]",
+            "uploader": "yakubo",
+            "prefix": "[YuiSubs] ",
+            "suffix": " (x265 H.265 1080p)",
+            "multi-sub": false
+        },
+        "yuisubs": {
+            "hevc": true,
+            "tags": "[YuiSubs]",
+            "uploader": "YuiSubs",
+            "prefix": "[YuiSubs] ",
+            "suffix": " (x265 H.265 1080p)",
+            "multi-sub": false
+        }
+    },
+    "config": {
+        "download_dir": "/home/yeager/Downloads",
+        "paused": false
+    }
+}
