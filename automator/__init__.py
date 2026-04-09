@@ -1,5 +1,6 @@
 import os
 BASE_URL = "https://nyaa.si"
+BASE_SUKEBEI = "https://sukebei.nyaa.si"
 __version__ = "0.10.3"
 
 def hex_to_rgb(hex_code):

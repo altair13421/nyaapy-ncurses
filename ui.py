@@ -292,6 +292,7 @@ class NyaaHelper:
             category=self.category,
             sub_category=self.sub_category,
             page=self.page,
+            sukebei=self.sukebei,
         )
 
     def startup(self):
@@ -321,6 +322,7 @@ class NyaaScreen(NyaaHelper, UniversalTorrentor):
         self.page = 1
         self.running = True
         self.selected = 0
+        self.sukebei = False
         self.startup()
         self.filter_mode = ""  # Added missing attribute filter_mode
         self.start_index = 0
@@ -356,6 +358,7 @@ class NyaaScreen(NyaaHelper, UniversalTorrentor):
             ("Space", "Toggle"),
             ("d", "Download"),
             ("T", "Change Screen"),
+            ("P", "Sukebei (Doesn't work with filters and vpn)"),
             ("q", "Quit"),
         ]
 
@@ -402,6 +405,9 @@ class NyaaScreen(NyaaHelper, UniversalTorrentor):
         # main UI
         elif key == ord("s"):
             self.handle_search(stdscr)
+        elif key == ord("P"):
+            self.sukebei = True
+            self.torrents = self.search()
         elif key == ord("f"):
             self.handle_filter(stdscr)
         elif key == ord("d"):

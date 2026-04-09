@@ -1,5 +1,5 @@
 import requests
-from automator import BASE_URL, utils
+from automator import BASE_URL, BASE_SUKEBEI, utils
 
 def search_torrent(*args, **kwargs):
     search = kwargs.get('search', "")
@@ -9,6 +9,13 @@ def search_torrent(*args, **kwargs):
     category = kwargs.get('category', 0)
     sub_category = kwargs.get('sub_category', 0)
     page = kwargs.get('page', 1)
+    sukebei = kwargs.get("sukebei", False)
+
+    if sukebei:
+        url = f'{BASE_SUKEBEI}'
+        if search is not None:
+            url += f'/?f=0&c=0_0&q={search}'
+        return utils.parse_rss(requests.get(url).text)
 
     if user is not None:
         # url = f'{BASE_URL}/user/{user}?f={filter}&c={category}_{sub_category}&q={search}&p={page}'
