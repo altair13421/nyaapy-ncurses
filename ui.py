@@ -181,7 +181,7 @@ class Torrenting(UniversalTorrentor):
         self.torrents = self.get_torrents()
         max_height = height - 7
         for i, torrent in enumerate(self.torrents[:max_height]):
-            text = f"{torrent['id']}|\t Rate: {torrent['get_speed'][0]:.2f} {torrent['get_speed'][1]}|\tStatus: {torrent['status']}  \t| Progress: {torrent['progress']} out of {torrent['formatted_size'][0]:.3f} {torrent['formatted_size'][1]}  \t| ETA:{torrent['eta']}\t| Download Location: {torrent['download_dir']} |\t{torrent['name'][:50]}"
+            text = f"{torrent['id']}|\t Rate: {torrent['get_speed'][0]:.2f} {torrent['get_speed'][1]}|\tStatus: {torrent['status']}  \t| Progress: {torrent['progress']}% | {torrent['formatted_size'][0]:.3f} {torrent['formatted_size'][1]}  \t| ETA:{torrent['eta']}\t| Download Location: {torrent['download_dir']} |\t{torrent['name'][:50]}"
             if i == self.selected:
                 color = self.get_color_on_status(torrent["status"])
                 attr = curses.A_REVERSE
@@ -371,7 +371,7 @@ class NyaaScreen(NyaaHelper, UniversalTorrentor):
             height - 7
         )  # Leave space for header (4 lines) and footer (3 lines)
         for i, torrent in enumerate(self.torrents[:max_torrents]):
-            text = f"{torrent['size']}\t|\tSeeds:{torrent['seeders']}  \t|\t{torrent['category']}\t|\t{torrent['title']} | "
+            text = f"| {torrent['size']}\t| Seeds:{torrent['seeders']}  \t|\t{torrent['category']}\t|\t{torrent['title']} | "
             # Truncate text if it's too long for the width
             if len(text) > width - 4:
                 text = text[: width - 7] + "..."
