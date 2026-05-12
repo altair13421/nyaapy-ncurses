@@ -235,7 +235,6 @@ class Torrenting(UniversalTorrentor):
             ("T", "Change Screen"),
             ("q", "Quit"),
         ]
-
         help_text = " | ".join([f"{key}: {desc}" for key, desc in help_items])
         stdscr.addstr(height - 2, (width - len(help_text)) // 2, help_text)
 
@@ -358,12 +357,13 @@ class NyaaScreen(NyaaHelper, UniversalTorrentor):
             ("Space", "Toggle"),
             ("d", "Download"),
             ("T", "Change Screen"),
-            ("P", "Sukebei (Doesn't work with filters and vpn)"),
+            ("P", "Sukebei (Doesn't work)"),
             ("q", "Quit"),
         ]
 
         help_text = " | ".join([f"{key}: {desc}" for key, desc in help_items])
-        stdscr.addstr(height - 2, (width - len(help_text)) // 2, help_text)
+        stdscr.addstr(height - 2, 0, help_text)
+
 
     def draw_torrents(self, stdscr, height, width):
         # Torrents
