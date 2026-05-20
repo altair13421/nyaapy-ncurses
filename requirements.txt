@@ -3,7 +3,7 @@ bs4==0.0.1
 certifi==2023.5.7
 charset-normalizer==3.1.0
 idna==3.4
-lxml==4.9.2
+lxml>=5.0.0
 markdown-it-py==2.2.0
 mdurl==0.1.2
 Pygments==2.15.1
