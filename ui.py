@@ -114,7 +114,7 @@ class Torrenting(UniversalTorrentor):
     def __init__(self):
         self.torrents = []
         self.selected = 0
-        self.current_state: Literal["active", "stopped"] = "stopped"
+        self.current_state: Literal["active", "stopped", "finished"] = "stopped"
 
     def stop_torrents(self):
         client.stop_all_torrents()
@@ -125,6 +125,9 @@ class Torrenting(UniversalTorrentor):
 
     def start_torrent(self, torrent_idx):
         client.start_torrent(torrent_idx)
+
+    def finished(self, status, progress):
+        return (status in ['stopped'] and float(progress) == 100)
 
     def start_torrents(self):
         client.start_all()
@@ -181,7 +184,54 @@ class Torrenting(UniversalTorrentor):
         self.torrents = self.get_torrents()
         max_height = height - 7
         for i, torrent in enumerate(self.torrents[:max_height]):
-            text = f"{torrent['id']}|\t Rate: {torrent['get_speed'][0]:.2f} {torrent['get_speed'][1]}|\tStatus: {torrent['status']}  \t| Progress: {torrent['progress']}% | {torrent['formatted_size'][0]:.3f} {torrent['formatted_size'][1]}  \t| ETA:{torrent['eta']}\t| Download Location: {torrent['download_dir']} |\t{torrent['name'][:50]}"
+            data_dict = {
+                "id":torrent['id'],
+                "rate": f"{torrent['get_speed'][0]:.2f} {torrent['get_speed'][1]}",
+                "status": torrent["status"],
+                "progress": f"{torrent['progress']}",
+                "size": f"{torrent['formatted_size'][0]:.3f} {torrent['formatted_size'][1]}",
+                "location": f"{torrent['download_dir']}",
+                "eta": torrent['eta'],
+                "name": f"{torrent['name']}"
+            }
+            text = ""
+            match torrent['status']:
+                case "seeding":
+                    text += "|\t".join([
+                        f"{data_dict['id']}",
+                        f"Status: {data_dict['status']}",
+                        f"Size: {data_dict['size']}",
+                        f"Location: {data_dict['location']}",
+                        f"{data_dict['name']}",
+                    ])
+                case "stopped":
+                    if self.finished(data_dict['status'], data_dict['progress']):
+                        text += " |\t".join([
+                            f"{data_dict['id']}",
+                            f"Status: finished",
+                            f"Size: {data_dict['size']}",
+                            f"{data_dict['name']}"
+                        ])
+                    else:
+                        text += " |\t".join([
+                            f"{data_dict['id']}",
+                            f"Status: {data_dict['status']}",
+                            f"Progress: {data_dict['progress']}",
+                            f"Size: {data_dict['size']}",
+                            f"{data_dict['name']}"
+                        ])
+                case "downloading":
+                    text += " |\t".join([
+                        f"{data_dict['id']}",
+                        f"Status: {data_dict['status']}",
+                        f"Progress: {data_dict['progress']}",
+                        f"{data_dict['size']}",
+                        f"ETA: {data_dict['eta']}",
+                        f"Rate: {data_dict['rate']}",
+                        f"{data_dict['name']}"
+                    ])
+
+            # text = f"{torrent['id']}|\t Rate: {torrent['get_speed'][0]:.2f} {torrent['get_speed'][1]}| Status: {torrent['status']}  \t| Progress: {torrent['progress']}% | {torrent['formatted_size'][0]:.3f} {torrent['formatted_size'][1]}  \t| ETA:{torrent['eta']}\t| Location: {torrent['download_dir']} |\t{torrent['name'][:40]}"
             if i == self.selected:
                 color = self.get_color_on_status(torrent["status"])
                 attr = curses.A_REVERSE
@@ -515,12 +565,17 @@ class NyaaScreen(NyaaHelper, UniversalTorrentor):
 
 
 class TerminalUI:
-    def __init__(self):
+    def __init__(self, offline_mode = False):
         self.running = True
-        self.screens = {
-            "TorrentScreen": Torrenting(),
-            "NyaaScreen": NyaaScreen(),
-        }
+        if offline_mode:
+            self.screens = {
+                "TorrentScreen": Torrenting()
+            }
+        else:
+            self.screens = {
+                "TorrentScreen": Torrenting(),
+                "NyaaScreen": NyaaScreen(),
+            }
         self.active_screen = self.get_home_screen()
 
     def get_home_screen(self):
@@ -619,8 +674,8 @@ class TerminalUI:
         self.running = False
 
 
-def main():
-    app = TerminalUI()
+def main(offline_mode = False):
+    app = TerminalUI(offline_mode=offline_mode)
     curses.wrapper(app.run)
 
 
