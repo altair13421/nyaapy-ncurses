@@ -183,6 +183,7 @@ class Torrenting(UniversalTorrentor):
     def draw_torrents(self, stdscr, height, width):
         self.torrents = self.get_torrents()
         max_height = height - 7
+        data = []
         for i, torrent in enumerate(self.torrents[:max_height]):
             data_dict = {
                 "id":torrent['id'],
@@ -191,7 +192,7 @@ class Torrenting(UniversalTorrentor):
                 "progress": f"{torrent['progress']}",
                 "size": f"{torrent['formatted_size'][0]:.3f} {torrent['formatted_size'][1]}",
                 "location": f"{torrent['download_dir']}",
-                "eta": torrent['eta'],
+                "eta": f"{torrent['eta']}",
                 "name": f"{torrent['name']}"
             }
             text = ""
@@ -230,6 +231,14 @@ class Torrenting(UniversalTorrentor):
                         f"Rate: {data_dict['rate']}",
                         f"{data_dict['name']}"
                     ])
+                case "download pending":
+                    text += " |\t".join([
+                        f"{data_dict['id']}",
+                        f"Status: {data_dict['status']}",
+                        f"Size: {data_dict['size']}",
+                        f"{data_dict['name']}"
+                    ])
+        
 
             # text = f"{torrent['id']}|\t Rate: {torrent['get_speed'][0]:.2f} {torrent['get_speed'][1]}| Status: {torrent['status']}  \t| Progress: {torrent['progress']}% | {torrent['formatted_size'][0]:.3f} {torrent['formatted_size'][1]}  \t| ETA:{torrent['eta']}\t| Location: {torrent['download_dir']} |\t{torrent['name'][:40]}"
             if i == self.selected:
@@ -247,6 +256,7 @@ class Torrenting(UniversalTorrentor):
                 color = self.get_color_on_status(torrent["status"])
                 attr = color if color is not None else 0
                 stdscr.addstr(i + 4, 2, text, attr)
+
 
     # this is for when you are adding a magnet link, will use the same logic for the main Torrent Adding
     def add_torrent_dialog(self, stdscr, height, width):
