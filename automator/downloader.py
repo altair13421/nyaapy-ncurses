@@ -32,6 +32,7 @@ class TorrentMapper:
         self.added_date: datetime = kwargs.get("added_date")
         self.done_date: datetime | None = kwargs.get("done_date")
         self.eta: timedelta | None = kwargs.get("eta")
+        self.labels: list[str] = kwargs.get('labels', [])
         self.json = {}
         for (
             kw,
@@ -89,6 +90,7 @@ class TorrentClient:
                 "added_date": torrent.added_date,
                 "done_date": torrent.done_date,
                 "eta": torrent.eta,
+                "labels": torrent.labels,
             }
         )
 

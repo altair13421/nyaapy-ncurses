@@ -193,7 +193,8 @@ class Torrenting(UniversalTorrentor):
                 "size": f"{torrent['formatted_size'][0]:.3f} {torrent['formatted_size'][1]}",
                 "location": f"{torrent['download_dir']}",
                 "eta": f"{torrent['eta']}",
-                "name": f"{torrent['name']}"
+                "name": f"{torrent['name']}",
+                "labels": ",".join(torrent['labels']),
             }
             text = ""
             match torrent['status']:
@@ -209,8 +210,8 @@ class Torrenting(UniversalTorrentor):
                     if self.finished(data_dict['status'], data_dict['progress']):
                         text += " |\t".join([
                             f"{data_dict['id']}",
-                            f"Status: finished",
-                            f"Size: {data_dict['size']}",
+                            f"Labels: {data_dict['labels']}",
+                            f"{data_dict['size']}",
                             f"{data_dict['name']}"
                         ])
                     else:

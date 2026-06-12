@@ -1,1 +1,18 @@
-jujutsu
+[
+    "id",
+    "name",
+    "is_finished",
+    "seeding",
+    "downloading",
+    "status",
+    "rate_download",
+    "total_size",
+    "progress",
+    "download_dir",
+    "added_date",
+    "done_date",
+    "eta",
+    "labels",
+    "formatted_size",
+    "get_speed"
+]
